@@ -20,7 +20,9 @@ return new class extends Migration
             $table->boolean('consent');
             $table->string('CV');
             $table->string('company_name');
-            $table->string('job_role');
+            $table->string('job_role'); 
+            $table->string('ATA_score')->nullable();
+            $table->string('status')->default('pending');
             $table->foreignIdFor(Job::class);
             $table->timestamps();
         });

@@ -13,6 +13,9 @@ class Application extends Model
         'consent',
         'CV',
         'company_name',
-        'job_role'
+        'job_role',
+        'job_id',
+        'ATA_score',
+        'status'
 ];
 }
