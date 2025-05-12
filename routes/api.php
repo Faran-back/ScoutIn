@@ -34,7 +34,7 @@ Route::post('generate-interview/{job}', [InterviewController::class, 'store_ai_g
 //     Route::resource('application', ApplicationController::class)->only(['update', 'destroy']);
 // });
 
-Route::get('application', [ApplicationController::class, 'index']);
-Route::post('{job}/application', [ApplicationController::class, 'store']);
-Route::post('application/{application}', [ApplicationController::class, 'update']);
-Route::delete('application/{application}', [ApplicationController::class, 'destroy']);
+// Route::get('application', [ApplicationController::class, 'index']);
+// Route::post('{job}/application', [ApplicationController::class, 'store']);
+// Route::post('application/{application}', [ApplicationController::class, 'update']);
+// Route::delete('application/{application}', [ApplicationController::class, 'destroy']);
