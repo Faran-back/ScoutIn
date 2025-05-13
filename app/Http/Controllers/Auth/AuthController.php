@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -51,5 +51,11 @@ class AuthController extends Controller
             'work_email' => 'required',
             'password' => 'required',
         ]);
+
+        if(Auth::attempt(['work_email' => $request->work_email, 'password' => $request->password ])){
+            $user = Auth::user();
+
+            return response()->json([]);
+        }
     }
 }
