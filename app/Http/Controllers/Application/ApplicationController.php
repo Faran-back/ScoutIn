@@ -13,9 +13,10 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id = null)
     {
-        $application = Application::latest()->paginate();
+        if(!request()->id){
+            $application = Application::latest()->paginate();
 
         if($application->isEmpty()){
             return response()->json([
@@ -24,6 +25,9 @@ class ApplicationController extends Controller
                 'applications' => $application
             ]);
         }
+        }
+
+        $application = Application::findOrFail($id);
 
         return response()->json([
             'status' => 200,

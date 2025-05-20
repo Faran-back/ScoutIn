@@ -8,10 +8,9 @@ use App\Models\Interview;
 use App\Models\InterviewQuestion;
 use App\Models\Job;
 use Exception;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
-class InterviewController extends Controller
+class InterviewQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.

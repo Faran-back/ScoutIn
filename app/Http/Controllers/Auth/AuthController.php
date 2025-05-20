@@ -14,19 +14,15 @@ class AuthController extends Controller
           try{
 
             $validated = $request->validate([
-            // 'company_name' => 'required',
-            // 'company_headquartered_at' => 'required',
-            // 'industry' => 'required',
-            // 'first_name' => 'required',
-            // 'last_name' => 'required',
-            // 'work_email' => 'required|email',
-            // 'phone_number' => 'required',
-            // 'password' => 'required',
-            // 'terms_and_conditions' => 'required'
-
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required'
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'work_email' => 'required|email',
+            'phone_number' => 'required',
+            'password' => 'required',
+            'company_name' => 'required',
+            'company_headquartered_at' => 'required',
+            'industry' => 'required',
+            'terms_and_conditions' => 'required'
         ]);
 
         $user = User::create($validated);
@@ -34,10 +30,7 @@ class AuthController extends Controller
         $token = $user->createToken('MyApp')->accessToken;
 
         return response()->json([
-            'status' => 200,
-            'message' => 'signed up successfully',
-            'user' => $user,
-            'token' => $token
+            'access_token' => $token
         ]);
 
         } catch(Exception $error){
@@ -51,19 +44,17 @@ class AuthController extends Controller
 
     public function login(Request $request){
         $request->validate([
-            'email' => 'required',
+            'work_email' => 'required',
             'password' => 'required'
         ]);
 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        if(Auth::attempt(['work_email' => $request->work_email, 'password' => $request->password])){
             $user = Auth::user();
 
             $access_token = $user->createToken('MyApp')->accessToken;
-            $refresh_token = $user->createToken('MyApp')->refreshToken;
 
             return response()->json([
-                'access_token' => $access_token,
-                'refresh_token' => $refresh_token,
+                'access_token' => $access_token
             ]); 
         }
 
