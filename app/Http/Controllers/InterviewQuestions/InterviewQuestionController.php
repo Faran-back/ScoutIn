@@ -49,14 +49,21 @@ class InterviewQuestionController extends Controller
         try{
              $request->validate([
                 'question' => 'required',
-                'answer' => 'required'
+                'answer' => 'required',
+                'params' => 'required'
             ]);
-    
-            $interview = InterviewQuestion::create([
-                'question' => $request->question,
-                'answer' => $request->answer,
-                'job_id' => $job->id
-            ]);
+
+            $params = [];
+
+
+            foreach($params as $param){
+                $interview = InterviewQuestion::create([
+                    'question' => $request->question,
+                    'answer' => $request->answer,
+                    'job_id' => $job->id,
+                    'param' => $request->param
+                ]);
+            }
     
             return response()->json([
                 'status' => 200,

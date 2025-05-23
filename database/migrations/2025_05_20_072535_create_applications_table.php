@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('ATA_score')->nullable();
             $table->string('status')->default('pending');
             $table->foreignIdFor(Job::class);
+            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
     }

@@ -16,6 +16,11 @@ class Application extends Model
         'job_role',
         'ATA_score',
         'status',
-        'job_id'
+        'job_id',
+        'user_id'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

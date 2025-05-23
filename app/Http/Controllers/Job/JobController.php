@@ -44,12 +44,14 @@ class JobController extends Controller
     {
          try{
             $validated = $request->validate([
-                'title' => 'required',
-                'experience' => 'required',
-                'salary_offered' => 'required',
-                'timings' => 'required',
+                'title' => 'required|max:255',
+                'experience' => 'required|max:255',
+                'salary_offered' => 'required|max:255',
+                'timings' => 'required|max:255',
                 'job_type' => 'required',
-                'description' => 'required'
+                'description' => 'required',
+                'params' => 'required|array|min:1',
+                'params.*' => 'required'
             ]);
     
             $job = Job::create($validated);

@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyDetail extends Model
 {
     protected $fillable = [
+        'user_id',
         'company_logo',
         'company_name',
-        'company_webiste',
+        'company_website',
         'number_of_employees',
         'industry',
         'country',

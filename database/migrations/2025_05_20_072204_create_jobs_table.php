@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('timings');
             $table->string('job_type');
             $table->string('description');
+            $table->json('params');
             $table->timestamps();
         });
     }

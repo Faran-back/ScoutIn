@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
-use Illuminate\Http\Request;
 use App\Models\Job;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -50,6 +51,9 @@ class ApplicationController extends Controller
     public function store(Request $request, Job $job)
     {
         try{
+
+            $user = Auth::user();
+            
             $request->validate([
                 'name' => 'required',
                 'email' => 'required|email',
@@ -75,6 +79,8 @@ class ApplicationController extends Controller
                     'job_id' => $job->id,
                     'ATA_score' => $request->ATA_score ?? 0,
                     'status' => $request->status ?? 'pending',
+                    'user_id' => $user->id
+                    
                 ]);
     
                 return response()->json([
@@ -114,6 +120,9 @@ class ApplicationController extends Controller
     public function update(Request $request, Application $application)
     {   
         try{
+
+            $user = Auth::user();
+            
             $request->validate([
                 'name' => 'required',
                 'email' => 'required',
@@ -136,7 +145,8 @@ class ApplicationController extends Controller
                     'consent' => $request->consent,
                     'CV' => $cv_name,
                     'company_name' => $request->company_name,
-                    'job_role' => $request->job_role
+                    'job_role' => $request->job_role,
+                    'user_id' => $user->id
                 ]);
 
                 return response()->json([

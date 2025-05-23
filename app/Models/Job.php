@@ -12,6 +12,11 @@ class Job extends Model
         'salary_offered',
         'timings',
         'job_type',
-        'description'
+        'description',
+        'params',
+    ];
+
+    protected $casts = [
+        'params' => 'array'
     ];
 }

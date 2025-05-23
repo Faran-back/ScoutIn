@@ -16,7 +16,7 @@ class AuthController extends Controller
             $validated = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'work_email' => 'required|email',
+            'work_email' => 'required|email|unique:users,work_email',
             'phone_number' => 'required',
             'password' => 'required',
             'company_name' => 'required',
@@ -27,10 +27,13 @@ class AuthController extends Controller
 
         $user = User::create($validated);
 
-        $token = $user->createToken('MyApp')->accessToken;
+        $token = $user->createToken('ScoutIn');
+        $access_token = $token->accessToken;
+        $refresh_token = $token->token->refresh_token;
 
         return response()->json([
-            'access_token' => $token
+            'access_token' => $access_token,
+            'refresh_token' => $refresh_token,
         ]);
 
         } catch(Exception $error){
@@ -51,15 +54,19 @@ class AuthController extends Controller
         if(Auth::attempt(['work_email' => $request->work_email, 'password' => $request->password])){
             $user = Auth::user();
 
-            $access_token = $user->createToken('MyApp')->accessToken;
+            $token = $user->createToken('ScoutIn');
+            $access_token = $token->accessToken;
+            $refresh_token = $token->token->refresh_token;
 
             return response()->json([
-                'access_token' => $access_token
+                'access_token' => $access_token,
+                'refresh_token' => $refresh_token,
             ]); 
         }
 
              return response()->json([
-                'message' => 'No records found'
+                'status' => 403,
+                'message' => 'Invalid credentials'
             ]); 
     }
 }
