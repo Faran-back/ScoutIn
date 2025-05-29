@@ -53,7 +53,7 @@ class ScheduleInterviewController extends Controller
                 'time' => 'required'
             ]);
 
-            $applications = Application::where('status', 'pending')->get();
+            $applications = Application::where('status', 'Waiting For Interview to be scheduled')->get();
 
             if($applications->isEmpty()){
                 return response()->json([
@@ -73,6 +73,10 @@ class ScheduleInterviewController extends Controller
                 'year' => $request->year,
                 'time' => $request->time,
                 'application_id' => $application->id
+            ]);
+
+            $application->update([
+                'status' => 'Interview Scheduled'
             ]);
 
             }
@@ -106,6 +110,10 @@ class ScheduleInterviewController extends Controller
                 'date' => $request->date,
                 'time' => $request->time,
                 'application_id' => $application->id
+            ]);
+
+            $application->update([
+                'status' => 'Interview scheduled'
             ]);
 
             return response()->json([

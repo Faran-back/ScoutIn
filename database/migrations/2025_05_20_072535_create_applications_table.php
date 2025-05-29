@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('job_role'); 
             $table->string('ATA_score')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('CV being reviewed');
             $table->foreignIdFor(Job::class);
             $table->foreignIdFor(User::class);
             $table->timestamps();

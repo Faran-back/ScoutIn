@@ -6,19 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ClientAuthController extends Controller
 {
     public function register(Request $request){
-        $request->validate([
+        $validated = $request->validate([
             'email' => 'required|unique:users',
-            'password' => 'required|confirmed',
+            'password' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'terms_and_conditions' => 'required',
         ]);
 
-        $user = User::create([
-            'email' => $request->email,
-            'password' => $request->password
-        ]);
+        $user = User::create($validated);
 
         $token = $user->createToken('ScoutIn')->accessToken;
 
@@ -29,17 +31,16 @@ class ClientAuthController extends Controller
 
     public function login(Request $request){
          $request->validate([
-            'email' => 'required|unique:users',
-            'password' => 'required|confirmed',
+            'email' => 'required|exists:users',
+            'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $request->email);
-        $password = User::where($user->password, $request->password);
+        $user = User::where('email', $request->email)->first();
 
-        if(!$user && !$password){
+        if(!$user || !Hash::check($request->password, $user->password)){
             return response()->json([
-               'status' => 403, 
-               'message' => 'No records found', 
+               'status' => 401, 
+               'message' => 'Invalid credentials', 
                'user' => $user 
             ]);
         }

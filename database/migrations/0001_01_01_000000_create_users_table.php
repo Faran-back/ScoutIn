@@ -15,19 +15,20 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('work_email')->unique();
+            $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('password');
-            $table->string('company_name');
-            $table->string('company_headquartered_at');
-            $table->string('industry'); 
-            $table->boolean('terms_and_conditions');
+
+            // Company Owner Fields            
+            $table->string('company_name')->nullable();
+            $table->string('company_location')->nullable(); 
+            $table->boolean('terms_and_conditions')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('work_email')->primary();
+            $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });

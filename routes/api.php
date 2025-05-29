@@ -5,23 +5,26 @@ use App\Http\Controllers\ApplicationStatus\ApplicationStatusController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ClientAuth\ClientAuthController;
 use App\Http\Controllers\CompanyDetails\CompanyDetailController;
+use App\Http\Controllers\Integration\IntegrationController;
 use App\Http\Controllers\Interview\InterviewQuestionController;
 use App\Http\Controllers\Job\JobController;
+use App\Http\Controllers\Office\OfficeController;
 use App\Http\Controllers\ScheduleInterview\ScheduleInterviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-
-
-
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
+/**
+ * Company Auth
+ */
 Route::post('/register', [AuthController::class, 'register']); 
 Route::post('/login', [AuthController::class, 'login']); 
+
+/**
+ * Client Auth
+ */
+Route::post('/candidate-register', [ClientAuthController::class, 'register']);
+Route::post('/candidate-login', [ClientAuthController::class, 'login']);
 
 /**
  * Job
@@ -29,7 +32,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function(){
     Route::resource('/jobs', JobController::class);
 });
-
 
 /**
  * Interview
@@ -78,22 +80,27 @@ Route::middleware('auth:api')->group(function(){
  * Social Accounts Integration
  */
 Route::middleware('auth:api')->group(function(){
-    Route::get('/social-integration', [CompanyDetailController::class, 'index']);
-    Route::post('/social-integration', [CompanyDetailController::class, 'store']);
-    Route::patch('/social-integration/{social}', [CompanyDetailController::class, 'update']);
-    Route::delete('/social-integration/{social}', [CompanyDetailController::class, 'destroy']);
+    Route::get('/social-integration', [IntegrationController::class, 'index']);
+    Route::post('/social-integration', [IntegrationController::class, 'store']);
+    Route::patch('/social-integration/{integration}', [IntegrationController::class, 'update']);
+    Route::delete('/social-integration/{integration}', [IntegrationController::class, 'destroy']);
 });
 
-/**
- * Client Auth
- */
-Route::post('/client-register', [ClientAuthController::class, 'register']);
-Route::post('/client-login', [ClientAuthController::class, 'login']);
-
 
 /**
- * Application Status Tracking
+ * Application Progress
  */
 Route::middleware('auth:api')->group(function(){
     Route::get('/application-progress', [ApplicationStatusController::class, 'index']);
+});
+
+
+/**
+ * Offices
+ */
+Route::middleware('auth:api')->group(function(){
+    Route::get('/offices', [OfficeController::class, 'index']);
+    Route::post('/offices', [OfficeController::class, 'store']);
+    Route::patch('/offices/{office}', [OfficeController::class, 'update']);
+    Route::delete('/offices/{office}', [OfficeController::class, 'destroy']);
 });

@@ -22,7 +22,7 @@ class User extends Authenticatable
         'user_id',
         'first_name',
         'last_name',
-        'work_email',
+        'email',
         'phone_number',
         'password',
         'company_name',
@@ -56,5 +56,13 @@ class User extends Authenticatable
 
     public function applications(){
         return $this->hasMany(Application::class);
+    }
+
+    public function integrations(){
+        return $this->hasMany(Integration::class);
+    }
+
+    public function offices(){
+        return $this->hasMany(Office::class);
     }
 }

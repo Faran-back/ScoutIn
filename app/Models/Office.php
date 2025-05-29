@@ -11,9 +11,8 @@ class Office extends Model
         'street_name',
         'house_number',
         'country',
-        'city',
-        'postal_code',
         'is_default',
+        'user_id',
     ];
 
 
